@@ -1,0 +1,106 @@
+/* Native GTK styles. Geometry stays fixed during hover/press transitions. */
+@define-color accent_color #f1f1f1;
+@define-color accent_bg_color #ededed;
+@define-color accent_fg_color #111111;
+@define-color window_bg_color #0c0c0c;
+@define-color window_fg_color #eeeeee;
+@define-color view_bg_color #111111;
+@define-color view_fg_color #eeeeee;
+@define-color card_bg_color #171717;
+@define-color card_fg_color #eeeeee;
+@define-color headerbar_bg_color #0c0c0c;
+@define-color headerbar_fg_color #eeeeee;
+@define-color sidebar_bg_color #101010;
+
+.uzeyir-doctor-window { font-family: "Manrope", "Adwaita Sans", sans-serif; font-size: 13px; color: #eeeeee; background: #0c0c0c; }
+.uzeyir-doctor-window headerbar { background: #0c0c0c; min-height: 40px; box-shadow: none; border-bottom: 1px solid #202020; }
+.uzeyir-doctor-window headerbar button { padding: 6px; }
+.page-header { font-size: 12px; font-weight: 500; color: #b2b2b2; }
+.module-tag { color: #a6a6a6; background: transparent; font-size: 10px; font-weight: 500; padding: 3px 8px; border: 1px solid #363636; border-radius: 6px; }
+.sidebar { background: #101010; padding: 22px 14px 16px; }
+.brand { font-size: 17px; font-weight: 650; letter-spacing: -0.5px; }
+.brand-mark { background: #ededed; border-radius: 10px; padding: 6px; }
+.brand-caption { font-size: 11px; color: #999999; }
+.sidebar-title { font-size: 10px; font-weight: 600; letter-spacing: 1.2px; color: #888888; }
+.nav-row { border-radius: 12px; background: transparent; border: 1px solid transparent; }
+.nav-row.current { background: #1e1e1e; border-color: #323232; }
+.nav-button { background: transparent; border: none; box-shadow: none; border-radius: 10px; padding: 12px 8px; }
+.nav-button:hover { background: #242424; }
+.nav-button.selected { background: transparent; }
+.nav-icon { color: #c7c7c7; opacity: 0.8; }
+.nav-title { font-size: 12px; font-weight: 600; }
+.nav-caption { font-size: 10px; font-weight: 400; color: #929292; }
+.nav-download { background: transparent; border: none; border-radius: 8px; padding: 7px; margin: 8px 5px 8px 0; color: #b5b5b5; }
+.nav-download:hover, .nav-download.selected { background: #363636; color: #ffffff; }
+.sidebar-footer { font-size: 10px; color: #a0a0a0; }
+.sidebar-settings { background: #171717; border: 1px solid #282828; border-radius: 12px; padding: 12px; }
+.sidebar-settings dropdown > button { padding: 6px 9px; font-size: 11px; }
+.sidebar-settings switch { min-height: 16px; min-width: 32px; }
+.sidebar-settings switch slider { min-height: 12px; min-width: 12px; }
+.sidebar separator { background: #2b2b2b; }
+.section-title { font-size: 16px; font-weight: 600; letter-spacing: -0.25px; }
+.hero { font-size: 34px; font-weight: 600; letter-spacing: -1.15px; line-height: 1.18; }
+.hero-description { color: #a6a6a6; font-size: 13px; line-height: 1.55; }
+.eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 1.45px; color: #a8a8a8; }
+.module-hero { padding: 5px 0 8px; }
+.muted, .dim-label { color: #a6a6a6; font-size: 12px; line-height: 1.5; }
+.card, .summary { background: #171717; border: 1px solid #303030; border-radius: 16px; padding: 20px; box-shadow: none; }
+.uzeyir-doctor-window .card:hover, .uzeyir-doctor-window .summary:hover { border-color: #484848; box-shadow: none; }
+.card-title, .title-3 { font-size: 14px; font-weight: 600; letter-spacing: -0.15px; }
+.title-1 { font-size: 28px; font-weight: 600; letter-spacing: -0.8px; }
+.title-2 { font-size: 20px; font-weight: 600; letter-spacing: -0.5px; }
+.heading { font-weight: 600; }
+.metric { font-size: 38px; font-weight: 500; letter-spacing: -1.3px; font-feature-settings: "tnum"; }
+.metric-card { padding: 17px 20px; }
+.metric-card .card-title, .metric-card .title-3 { font-size: 11px; color: #bdbdbd; font-weight: 500; }
+.metric-card .muted { font-size: 11px; }
+.metric-bar trough { min-height: 3px; border-radius: 6px; background: #343434; border: none; }
+.metric-bar progress { min-height: 3px; border-radius: 6px; background: #d2d2d2; border: none; }
+.live-state { font-size: 10px; color: #b0b0b0; font-feature-settings: "tnum"; }
+.machine-identity { font-size: 11px; color: #969696; line-height: 1.5; }
+.sensor-row { background: #1c1c1c; border-radius: 8px; padding: 8px 12px; }
+button { background-image: none; font-weight: 500; }
+.primary, button.suggested-action { background: #ededed; color: #161616; border: 1px solid #ededed; border-radius: 10px; padding: 11px 18px; font-size: 12px; font-weight: 650; }
+.primary:hover, button.suggested-action:hover { background: #ffffff; border-color: #ffffff; color: #111111; }
+.primary:active, button.suggested-action:active { background: #cccccc; border-color: #cccccc; }
+.soft { background: #202020; color: #e1e1e1; border: 1px solid #393939; border-radius: 9px; padding: 9px 13px; font-size: 11px; }
+.soft:hover { background: #2b2b2b; border-color: #525252; }
+.soft:active { background: #171717; }
+button:disabled { opacity: 0.45; }
+.icon-action { background: #1e1e1e; border: 1px solid #333333; border-radius: 9px; padding: 9px; }
+entry, searchentry, spinbutton { background: #1e1e1e; border-color: #3a3a3a; border-radius: 8px; color: #eeeeee; font-size: 12px; }
+searchentry { padding: 7px 10px; }
+dropdown > button { background: #222222; border: 1px solid #3a3a3a; border-radius: 8px; padding: 8px 10px; font-size: 12px; }
+popover contents { background: #202020; color: #eeeeee; border: 1px solid #3b3b3b; border-radius: 12px; }
+listview row:selected { background: #383838; color: #ffffff; }
+switch:checked { background: #dddddd; color: #111111; }
+scale highlight, progressbar progress { background: #dedede; }
+.pill { font-size: 10px; font-weight: 600; border-radius: 6px; padding: 5px 9px; }
+.ok, .info, .unknown { background: #292929; border: 1px solid #3c3c3c; color: #cfcfcf; }
+.warning { background: #2c2c2c; border: 1px solid #999999; color: #ffffff; }
+.critical { background: #dddddd; border: 1px solid #ededed; color: #111111; }
+.summary { padding: 14px 18px; font-size: 12px; color: #c6c6c6; }
+.evidence, .code-command { font-family: "Adwaita Mono", "Noto Sans Mono", monospace; font-size: 11px; font-feature-settings: "tnum"; color: #c6c6c6; }
+.scan-result { padding: 22px; }
+.scan-result label { line-height: 1.5; }
+.scan-result .metric { line-height: 1.15; }
+.scan-result expander { margin-top: 8px; }
+expander title { font-size: 12px; color: #c0c0c0; padding: 5px 0; }
+.doctor-empty { background: transparent; border: 1px dashed #383838; border-radius: 16px; padding: 25px; }
+.doctor-empty .card-title { color: #c9c9c9; }
+.scan-overview { background: linear-gradient(125deg, #242424, #161616); border-color: #444444; }
+.scan-count { font-size: 30px; font-weight: 500; letter-spacing: -0.8px; font-feature-settings: "tnum"; }
+.download-hero-icon { border-radius: 18px; border: 1px solid #3c3c3c; background: linear-gradient(145deg, #303030, #151515); padding: 24px; }
+.download-version { font-size: 29px; font-weight: 550; letter-spacing: -0.7px; }
+.download-filename { font-family: "Adwaita Mono", "Noto Sans Mono", monospace; font-size: 11px; color: #adadad; }
+.download-kind { font-size: 12px; font-weight: 600; }
+.download-list { background: #171717; border: 1px solid #303030; border-radius: 14px; }
+.download-row { padding: 15px 18px; }
+.download-row + .download-row { border-top: 1px solid #303030; }
+.download-links { padding: 2px 0; }
+.text-action { background: transparent; border: none; color: #bdbdbd; font-size: 11px; padding: 7px 0; }
+.text-action:hover { color: #ffffff; background: transparent; }
+.command-panel { background: #101010; border: 1px solid #333333; border-radius: 10px; padding: 13px; }
+.download-notice { font-size: 11px; line-height: 1.55; color: #a3a3a3; }
+.shortcut-key { background: #242424; border: 1px solid #424242; border-radius: 6px; padding: 6px 10px; font-family: monospace; font-size: 11px; }
+.uzeyir-doctor-window.reduce-motion, .uzeyir-doctor-window.reduce-motion * { animation: none; transition: none; }

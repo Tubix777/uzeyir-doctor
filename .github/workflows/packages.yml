@@ -1,0 +1,64 @@
+name: Verify distribution packages
+on:
+  workflow_call:
+    inputs:
+      ref:
+        type: string
+        required: false
+        default: ""
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          ref: ${{ inputs.ref || github.ref }}
+      - run: python3 packaging/build_source.py --output source-archive
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: uzeyir-doctor-source
+          path: source-archive/*.tar.gz
+          if-no-files-found: error
+  validate:
+    needs: source
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: fedora
+            image: registry.fedoraproject.org/fedora:44
+            script: fedora
+          - platform: ubuntu24
+            image: ubuntu:24.04
+            script: deb
+          - platform: ubuntu26
+            image: ubuntu:26.04
+            script: deb
+          - platform: deepin25
+            image: linuxdeepin/deepin:25
+            script: deb
+          - platform: arch
+            image: archlinux:latest
+            script: arch
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          ref: ${{ inputs.ref || github.ref }}
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: uzeyir-doctor-source
+          path: source-archive
+      - name: Test native pages, build and install package
+        run: docker run --rm -v "$PWD:/workspace" -w /workspace -e UZEYIR_SOURCE_ARCHIVE="/workspace/$(find source-archive -maxdepth 1 -name '*.tar.gz' -print -quit)" '${{ matrix.image }}' bash 'packaging/ci/${{ matrix.script }}.sh'
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: uzeyir-doctor-${{ matrix.platform }}
+          path: dist/*
+          if-no-files-found: error

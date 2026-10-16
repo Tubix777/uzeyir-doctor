@@ -1,0 +1,6 @@
+#!/usr/bin/python3
+"""System launcher; the application never requires root."""
+import sys
+sys.path.insert(0, "/usr/share/uzeyir-doctor/src")
+from uzeyir_doctor.app import main
+raise SystemExit(main())

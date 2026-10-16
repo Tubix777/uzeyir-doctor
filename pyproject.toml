@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "uzeyir-doctor"
+version = "0.1.0"
+description = "Native read-only Linux system diagnostics"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "GPL-3.0-or-later"
+license-files = ["COPYING", "licenses/*.txt"]
+authors = [{name = "Tubix777 and contributors"}]
+[project.urls]
+Homepage = "https://github.com/Tubix777/uzeyir-doctor"
+Source = "https://github.com/Tubix777/uzeyir-doctor"
+[project.scripts]
+uzeyir-doctor = "uzeyir_doctor.app:main"
+[tool.setuptools]
+package-dir = {"" = "src"}
+[tool.uzeyir-doctor]
+source-date-epoch = 1792095464
+[tool.setuptools.packages.find]
+where = ["src"]
+[tool.setuptools.package-data]
+uzeyir_doctor = ["resources/*.svg", "resources/*.css", "resources/*.ttf"]

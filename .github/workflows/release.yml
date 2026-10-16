@@ -1,0 +1,40 @@
+name: Publish verified release
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to verify or resume
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  distributions:
+    uses: ./.github/workflows/packages.yml
+    with:
+      ref: ${{ inputs.tag || github.ref }}
+  release:
+    needs: distributions
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          ref: ${{ inputs.tag || github.ref }}
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: uzeyir-doctor-*
+          path: verified-artifacts
+      - name: Verify source consistency and collect distro assets
+        run: python3 packaging/collect_release.py verified-artifacts --output dist
+      - name: Publish verified packages
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+        run: python3 packaging/publish_release.py "$RELEASE_TAG" --assets dist

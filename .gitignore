@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+build/
+dist/
+work/
+*.rpm
+*.tar.gz
+*.log
+
+# Personal Qwen context and local model configuration
+QWEN.md
+.qwen/

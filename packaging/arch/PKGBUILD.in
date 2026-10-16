@@ -1,0 +1,18 @@
+# Upstream GitHub release recipe. This project is not published in the AUR.
+pkgname=uzeyir-doctor
+pkgver=@VERSION@
+pkgrel=1
+pkgdesc='Native Linux system diagnostics with clear next steps'
+arch=('any')
+url='https://github.com/Tubix777/uzeyir-doctor'
+license=('GPL-3.0-or-later' 'OFL-1.1')
+depends=('python>=3.11' 'python-gobject' 'python-cairo' 'gtk4>=4.12' 'libadwaita>=1.5' 'fontconfig' 'librsvg')
+optdepends=('udisks2: SSD SMART readback' 'flatpak: Flatpak diagnostics' 'lm_sensors: additional sensor readings')
+options=('!strip' '!debug')
+source=("https://github.com/Tubix777/uzeyir-doctor/releases/download/v${pkgver}/uzeyir-doctor-${pkgver}.tar.gz")
+sha256sums=('@SHA256@')
+
+package() {
+  cd "${srcdir}/uzeyir-doctor-${pkgver}"
+  python3 packaging/stage_payload.py "${pkgdir}"
+}

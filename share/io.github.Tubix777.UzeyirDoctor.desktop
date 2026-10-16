@@ -1,0 +1,15 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Uzeyir Doctor
+GenericName=Linux system diagnostics
+GenericName[tr]=Linux sistem teşhisi
+Comment=Understand local Linux system issues with clear diagnostic steps
+Comment[tr]=Linux sorunlarını anlaşılır tarama sonuçları ve adımlarla gör
+Exec=uzeyir-doctor
+Icon=io.github.Tubix777.UzeyirDoctor
+Terminal=false
+Categories=System;GTK;
+Keywords=diagnostics;system;repair;troubleshooting;Linux;Fedora;
+StartupNotify=true
+StartupWMClass=io.github.Tubix777.UzeyirDoctor

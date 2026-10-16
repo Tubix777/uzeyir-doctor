@@ -9,8 +9,12 @@
 - [x] Complete standalone documentation and check source contents.
 - [x] Build and install packages in supported Linux containers; open both native views.
 - [x] Create `Tubix777/uzeyir-doctor`, publish its reviewed source and wait for green CI.
-- [ ] Publish `v0.1.0` with source, DEB, RPM, source RPM, Arch package/build recipe and checksums.
-- [ ] Download the public assets and verify checksums and source consistency.
+- [x] Publish `v0.1.0` with source, DEB, RPM, source RPM, Arch package/build recipe and checksums.
+- [x] Download the public assets and verify checksums and source consistency.
+
+## Completed release
+
+`v0.1.0` is published at <https://github.com/Tubix777/uzeyir-doctor/releases/tag/v0.1.0>. The five Linux release jobs passed; each distro ran 74 tests and opened the installed diagnostics and downloads views. The seven public assets match GitHub's published digests and `SHA256SUMS`. All 65 files in the public source archive match this repository revision, and the Arch build bundle contains that same source archive with a pinned hash.
 
 ## Later releases
 

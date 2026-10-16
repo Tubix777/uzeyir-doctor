@@ -6,9 +6,9 @@
 - [x] Give it an independent app ID, command, settings file and GitHub download page.
 - [x] Keep Turkish/English, the monochrome design, bundled typography and reduced-motion-aware animations.
 - [x] Prepare reproducible source, Debian-family, Fedora and Arch package workflows.
-- [ ] Complete standalone documentation and check source contents.
-- [ ] Build and install packages in supported Linux containers; open both native views.
-- [ ] Create `Tubix777/uzeyir-doctor`, publish its reviewed source and wait for CI.
+- [x] Complete standalone documentation and check source contents.
+- [x] Build and install packages in supported Linux containers; open both native views.
+- [x] Create `Tubix777/uzeyir-doctor`, publish its reviewed source and wait for green CI.
 - [ ] Publish `v0.1.0` with source, DEB, RPM, source RPM, Arch package/build recipe and checksums.
 - [ ] Download the public assets and verify checksums and source consistency.
 

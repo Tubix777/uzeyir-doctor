@@ -145,7 +145,7 @@ def bundled_release(module):
                  f"uzeyir-doctor-{__version__}-arch-build.tar.gz",
                  f"uzeyir-doctor-{__version__}-1.fc44.src.rpm")
         return parse_release({"tag_name": tag, "html_url": f"https://github.com/{repository}/releases/tag/{tag}",
-                              "prerelease": True, "assets": [
+                              "prerelease": False, "assets": [
                                   {"name": name, "browser_download_url": f"https://github.com/{repository}/releases/download/{tag}/{name}"}
                                   for name in names]}, repository)
     path = Path(__file__).parent / "resources" / "downloads.json"

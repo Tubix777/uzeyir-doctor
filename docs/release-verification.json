@@ -1,0 +1,64 @@
+{
+  "product": "uzeyir-doctor",
+  "version": "0.2.0",
+  "url": "https://github.com/Tubix777/uzeyir-doctor/releases/tag/v0.2.0",
+  "assets": [
+    {
+      "name": "SHA256SUMS",
+      "size": 602,
+      "sha256": "f319735a7324e8c461ccceb2a28ba758d08865fe3609f9776ae9df606be374ec"
+    },
+    {
+      "name": "uzeyir-doctor-0.2.0-1-any.pkg.tar.zst",
+      "size": 155131,
+      "sha256": "34a2ce0efae605e5b539446755e9d815641f3301372e45216eff9dad4f66b72a"
+    },
+    {
+      "name": "uzeyir-doctor-0.2.0-1.fc44.noarch.rpm",
+      "size": 143636,
+      "sha256": "d253d03addfdcd266559af2db8f177b94effbea5990a28f6dc768560b915569f"
+    },
+    {
+      "name": "uzeyir-doctor-0.2.0-1.fc44.src.rpm",
+      "size": 2342974,
+      "sha256": "b37117af26699d8e29fa56f6e05738385a629555c37301089c732cef0f2ab83c"
+    },
+    {
+      "name": "uzeyir-doctor-0.2.0-arch-build.tar.gz",
+      "size": 2332105,
+      "sha256": "e8c1cc2862bcdd87b1c34e4163e6d522808287490e500e73ee258d1dd54d606b"
+    },
+    {
+      "name": "uzeyir-doctor-0.2.0.tar.gz",
+      "size": 2335718,
+      "sha256": "4acbb74b2bd69011479cb776dc2aff75b595b761ff7dafabef2b70367f03e808"
+    },
+    {
+      "name": "uzeyir-doctor_0.2.0-1_all.deb",
+      "size": 125232,
+      "sha256": "ae69fe093dcc5a3783fe7caba2b98cf6f6a822ccd52b402c727df111d59798ea"
+    }
+  ],
+  "source_files_verified": 81,
+  "canonical_arch_and_srpm": true,
+  "live_update_downloads": [
+    {
+      "format": "deb",
+      "version": "0.2.0",
+      "verified": true
+    },
+    {
+      "format": "rpm",
+      "version": "0.2.0",
+      "verified": true
+    },
+    {
+      "format": "arch",
+      "version": "0.2.0",
+      "verified": true
+    }
+  ],
+  "release_commit": "860d2c5227b158bd048f0bf8dc21e13e01ceb96b",
+  "verified_at_utc": "2026-10-17T22:13:41.380436+00:00",
+  "native_authorization_tested": false
+}

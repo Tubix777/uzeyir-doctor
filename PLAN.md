@@ -26,8 +26,8 @@ For each change, update the version, advance `source-date-epoch`, write release 
 - [x] Add short interruptible transitions and a shared navigation indicator.
 - [x] Preserve expanded evidence; show accurate failure and copy feedback.
 - [x] Verify fast navigation, focus, resize, language, reduced motion and close behavior.
-- [ ] Validate both installed views and packages in all five distro containers.
-- [ ] Publish and verify the source, distro assets and checksums on GitHub.
+- [x] Validate both installed views and packages in all five distro containers.
+- [x] Publish and verify the source, distro assets and checksums on GitHub.
 
 ## In-app updates — added before publication
 
@@ -39,4 +39,17 @@ For each change, update the version, advance `source-date-epoch`, write release 
   fall back clearly to the distro's native package installer when unavailable.
 - [x] Verify the installed version before restart; preserve the working app on failure.
 - [x] Test tampered packages, offline state, stale results, cancellation and close.
-- [ ] Revalidate packages and publish detailed updated documentation and releases.
+- [x] Revalidate packages and publish detailed updated documentation and releases.
+
+## 0.2.0 publication complete — 18 October 2026
+
+[v0.2.0](https://github.com/Tubix777/uzeyir-doctor/releases/tag/v0.2.0) is published.
+All five distro jobs and the release job passed. The 111-test suite and installed
+diagnostics/download/update views passed; Fedora/Arch skip only the dpkg-deb tool test.
+All seven public assets match their GitHub size/digest and SHA256SUMS. All 81 files
+in the canonical source match the tagged revision; Arch and source RPM embed the
+same archive. The live updater selected, downloaded and verified DEB/RPM/Arch
+packages while comparing against 0.1.0. Real system authorization was not exercised.
+
+[Release verification](docs/release-verification.json) records the tagged release;
+this completion record was added after the tag.

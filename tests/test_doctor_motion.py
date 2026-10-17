@@ -76,7 +76,7 @@ class ScanMotionTests(unittest.TestCase):
         self.background_patch.start()
         self.host = Adw.ApplicationWindow(application=self.application)
         self.host.set_default_size(1040, 740)
-        self.window = Window(self.host, Translator(), Settings(path="/tmp/uzeyir-doctor-unused-test-preferences"))
+        self.window = Window(self.host, Translator(), Settings(path="/tmp/linux-control-unused-test-preferences"))
         self.window.set_active(True)
         self.host.set_content(self.window)
         self.host.present()
@@ -172,6 +172,28 @@ class ScanMotionTests(unittest.TestCase):
         self.assertIsNone(self.window.scan_signal._tick_id)
         self.window.filter_button.set_active(True)
         self.assertIsNone(self.window.scan_signal._tick_id)
+
+    def test_expanded_evidence_survives_filter_and_language_changes(self):
+        items = findings(3)
+        self.window.show_findings(items, auto_scroll=False)
+        self.finish_motion()
+        self.window._expanders[id(items[0])].set_expanded(True)
+        self.window.filter_button.set_active(True)
+        self.assertTrue(self.window._expanders[id(items[0])].get_expanded())
+        self.window.tr.set_language("en")
+        self.assertTrue(self.window._expanders[id(items[0])].get_expanded())
+        self.assertEqual(self.window.scan_counts["checks"].get_label(), "3")
+
+    def test_failed_scan_is_not_reported_as_a_completed_check(self):
+        self.window.start_scan()
+        self.assertEqual(self.window.scan_button.get_label(), "Kontrol ediliyor…")
+        self.window.show_findings(None)
+        self.assertEqual(self.window.scan_counts["checks"].get_label(), "0")
+        self.assertIn("tamamlanamadı", self.window.summary.get_label())
+        self.window.tr.set_language("en")
+        self.assertEqual(self.window.scan_counts["checks"].get_label(), "0")
+        self.assertIn("could not finish", self.window.summary.get_label())
+        self.assertEqual(self.window.scan_button.get_label(), "Scan system")
 
     def test_unseen_cards_reveal_when_user_scrolls_later(self):
         self.window.show_findings(findings(12))

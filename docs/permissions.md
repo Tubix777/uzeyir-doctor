@@ -9,3 +9,14 @@ Flatpak checks list installed apps and inspect their configured filesystem permi
 The release page is loaded only when the user opens downloads or asks to refresh the release. Download buttons open GitHub in the default browser. The app never installs a package, edits Flatpak overrides, changes system configuration or starts a root helper.
 
 The language, reduced-motion preference and window preferences are saved in `~/.config/uzeyir-doctor/preferences.json` (or under `$XDG_CONFIG_HOME`). They remain on the computer and can be removed by deleting that file.
+
+## App update authorization
+
+Diagnostic checks remain read-only. App installation is a separate action in the
+Updates dialog. Only the app's official GitHub release is used; byte size, asset
+SHA-256 and SHA256SUMS are checked before the native installer receives a file.
+The existing PackageKit service uses the desktop's normal authorization. No
+privileged helper, password storage, global signature change or broad device
+permission is added. Without that service, the system package installer or an
+explicit manual command is offered. Startup release checks are optional and
+disabled by default. No diagnostic output is sent during a release check.

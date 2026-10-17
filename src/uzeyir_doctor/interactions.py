@@ -1,5 +1,6 @@
 """Shared decorative motion, scheduled only while a transition is running."""
 from __future__ import annotations
+from contextlib import contextmanager
 
 import gi
 gi.require_version("Gtk", "4.0")
@@ -71,19 +72,19 @@ CSS = """
 .uzeyir-doctor-window popover contents {
   animation: control-menu-in 160ms ease-out;
 }
-@keyframes control-selection-in {
-  from { box-shadow: inset 3px 0 #eeeeee; }
-  to { box-shadow: inset 3px 0 #666666; }
-}
 .uzeyir-doctor-window .nav-row {
-  transition: background-color 220ms ease-out, border-color 220ms ease-out;
-}
-.uzeyir-doctor-window .nav-row.current {
-  animation: control-selection-in 480ms ease-out;
-  box-shadow: inset 3px 0 #666666;
+  transition: background-color 260ms ease-out, border-color 260ms ease-out;
 }
 .uzeyir-doctor-window .nav-download:hover image {
   -gtk-icon-transform: translate(0, 2px);
+}
+@keyframes control-completion-halo {
+  from { box-shadow: 0 0 0 0 alpha(#ffffff, 0.25); }
+  to { box-shadow: 0 0 0 8px alpha(#ffffff, 0); }
+}
+.uzeyir-doctor-window .operation-finished,
+.uzeyir-doctor-window .copy-confirmed {
+  animation: control-completion-halo 640ms ease-out;
 }
 .uzeyir-doctor-window.reduce-motion,
 .uzeyir-doctor-window.reduce-motion * {
@@ -109,8 +110,18 @@ class MotionController:
         self._fades = {}
         self._tick_id = None
         self._order = 0
+        self._navigating = False
 
-    def decorate(self, root):
+    @contextmanager
+    def navigation(self):
+        """One page blend owns the entrance, rather than fading its cards twice."""
+        self._navigating = True
+        try:
+            yield
+        finally:
+            self._navigating = False
+
+    def decorate(self, root, _inside_entrance=False):
         if self._closed:
             return
         children = []
@@ -124,13 +135,13 @@ class MotionController:
             self._decorated.add(root)
             if isinstance(root, Gtk.Expander):
                 self._decorate_expander(root)
-            if entrance and not root.has_css_class("scan-result"):
+            if entrance and not _inside_entrance and not root.has_css_class("scan-result"):
                 self._connect(root, "map", self._card_mapped)
                 self._connect(root, "unmap", self._card_unmapped)
                 if root.get_mapped():
                     self._card_mapped(root)
         for child in children:
-            self.decorate(child)
+            self.decorate(child, _inside_entrance or entrance)
 
     def _decorate_expander(self, expander):
         child = expander.get_child()
@@ -171,16 +182,16 @@ class MotionController:
             reveal.set_visible(False)
 
     def _card_mapped(self, card):
-        if self._closed or not self.enabled:
+        if self._closed or not self.enabled or self._navigating:
             self._settle(card)
             return
         if not self._fades:
             self._order = 0
-        self._fades[card] = (None, min(self._order * 55000, 165000))
+        self._fades[card] = (None, min(self._order * 40000, 120000))
         self._order += 1
-        card.set_opacity(0.45)
+        card.set_opacity(0.7)
         if hasattr(card, "set_entrance_offset"):
-            card.set_entrance_offset(18)
+            card.set_entrance_offset(12)
         if self._tick_id is None:
             self._tick_id = self.window.add_tick_callback(self._frame)
 
@@ -200,11 +211,11 @@ class MotionController:
             if started is None:
                 started = now + delay
                 self._fades[card] = (started, delay)
-            progress = min(1, max(0, (now - started) / 420000))
+            progress = min(1, max(0, (now - started) / 320000))
             eased = 1 - (1 - progress) ** 3
-            card.set_opacity(0.45 + 0.55 * eased)
+            card.set_opacity(0.7 + 0.3 * eased)
             if hasattr(card, "set_entrance_offset"):
-                card.set_entrance_offset(18 * (1 - eased))
+                card.set_entrance_offset(12 * (1 - eased))
             if progress >= 1:
                 self._settle(card)
                 self._fades.pop(card, None)

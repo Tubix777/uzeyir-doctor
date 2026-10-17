@@ -530,3 +530,49 @@ Diğer kontrolleri görmek için filtreyi kapatabilirsin.	Turn off the filter to
 
 TRANSLATIONS["Uzeyir Doctor’ün bağımsız uygulamasını ve Linux kurulum paketlerini indir."] = "Download the standalone Uzeyir Doctor application and Linux installation packages."
 TRANSLATIONS["Sorunları anlaşılır biçimde gör."] = "Understand system issues clearly."
+
+TRANSLATIONS.update({"Kontrol ediliyor…": "Checking…", "Kopyalandı": "Copied", "Tarama tamamlanamadı. Tekrar deneyebilirsin.": "The scan could not finish. You can try again.", "Tarama tamamlanamadı": "Scan could not finish", "Bir kontrol sırasında hata oluştu. Tekrar taramayı deneyebilirsin.": "A check encountered an error. You can try scanning again."})
+
+TRANSLATIONS.update(dict(line.split("\t",1) for line in """
+Güncellemeler	Updates
+Mevcut sürüm: {version}	Current version: {version}
+Yeni sürüm: {version}	New version: {version}
+GitHub’da yayımlanan yeni sürümleri buradan kontrol edebilirsin.	Check new GitHub releases here.
+Yeni sürüm kontrol ediliyor…	Checking for a new release…
+En güncel sürümü kullanıyorsun.	You are up to date.
+Yeni sürüm hazır. Sürüm notlarını inceleyip güncelleyebilirsin.	A new release is ready. Review the notes and update when you are ready.
+Yeni bir uygulama sürümü hazır.	A new app release is available.
+Paket indiriliyor ve SHA-256 ile doğrulanıyor…	Downloading and verifying the package with SHA-256…
+Paket doğrulandı. Hazır olduğunda kurulumu başlat.	Package verified. Start installation when you are ready.
+Güncelleme indirildi. Kuruluma hazır.	Update downloaded. Ready to install.
+Kurulum öncesi paket yeniden doğrulanıyor…	Verifying the package again before installation…
+Sistem paket yöneticisi kurulumu yürütüyor. Yetkilendirme penceresini tamamla.	The system package manager is installing the update. Complete the authorization prompt.
+Dağıtımın paket kurucusu açıldı. Kurulum bitince buradan doğrula.	Your distribution’s package installer is open. Verify installation here when it finishes.
+Bu sistemde paket kurucusu açılamadı. Doğrulanan dosyanın kurulum komutunu kopyalayabilirsin.	No package installer could be opened. You can copy the verified file’s installation command.
+Kurulu sürüm kontrol ediliyor…	Checking the installed version…
+Güncelleme kuruldu. Yeni sürümü kullanmak için uygulamayı yeniden başlat.	Update installed. Restart the app to use the new version.
+Yeni sürüm henüz doğrulanamadı. Kurulumu tamamlayıp tekrar kontrol et.	The new version is not verified yet. Complete installation and check again.
+Uygulamayı menüden yeniden başlatabilirsin.	You can restart the app from its menu entry.
+Güncellemeyi indir	Download update
+Kurulumu başlat	Start installation
+Yeniden başlat	Restart
+Kurulumu doğrula	Verify installation
+Kurulum komutunu kopyala	Copy installation command
+Tekrar dene	Try again
+Güncellemeleri kontrol et	Check for updates
+İndirmeyi iptal et	Cancel download
+GitHub’da sürümleri aç	Open GitHub releases
+Sürüm notları	Release notes
+Açılışta güncellemeleri kontrol et	Check for updates at startup
+Sürüm kontrolü GitHub’a bağlanır. Kurulum yalnız sen başlatınca yapılır; sistem yetkilendirme isteyebilir.	Release checks connect to GitHub. Installation starts only when you request it; the system may ask for authorization.
+GitHub’a ulaşılamadı. Bağlantını kontrol edip tekrar deneyebilirsin.	Could not reach GitHub. Check your connection and try again.
+Sürüm bilgileri doğrulanamadı. Kurulum başlatılmadı.	Release details could not be verified. Installation was not started.
+Paket doğrulanamadı. Dosya kullanılmadı; tekrar indirebilirsin.	The package could not be verified. It was not used; you can download it again.
+İndirme klasörüne yazılamadı. Boş alanı ve klasör izinlerini kontrol et.	Could not write to the download folder. Check free space and folder permissions.
+Bu sürümde sistemine uygun doğrulanabilir paket bulunamadı.	No verifiable package for your system was found in this release.
+Bu sistem için uygulama içi paket kurulumu desteklenmiyor. Sürüm sayfasını açabilirsin.	In-app package installation is unsupported on this system. You can open the release page.
+İndirme iptal edildi. Çalışan sürüm korunuyor.	Download cancelled. Your running version is unchanged.
+Paket yöneticisi kurulumu tamamlayamadı. İşlemi kontrol edip yeniden deneyebilirsin.	The package manager could not complete installation. Check the operation and try again.
+""".strip().splitlines()))
+
+TRANSLATIONS["Kurulum durumu alınamadı. Yeniden kurmadan önce kurulu sürümü doğrula."] = "Installation status is unavailable. Verify the installed version before retrying installation."

@@ -15,6 +15,8 @@ from .i18n import Translator
 from .settings import Settings
 from .interactions import CSS as MOTION_CSS, MotionController
 from .design import CSS as DESIGN_CSS, icon, load_font
+from .navigation import PageTransition, SelectionIndicator
+from .update_ui import UpdateController
 from .pages.doctor import DoctorPage
 from .pages.downloads import DownloadsPage
 
@@ -57,6 +59,11 @@ class MainWindow(Adw.ApplicationWindow):
         help_button.add_css_class("flat")
         help_button.connect("clicked", self.show_shortcuts)
         header.pack_end(help_button)
+        self.update_button = Gtk.Button(css_classes=["flat"])
+        self.update_button.set_child(icon("update", 18))
+        self.tr.bind(self.update_button, "Güncellemeler", "set_tooltip_text")
+        self.update_button.connect("clicked", lambda *_: self.updater.show())
+        header.pack_end(self.update_button)
         root.append(header)
         body = box(0, True)
         body.set_vexpand(True)
@@ -78,6 +85,11 @@ class MainWindow(Adw.ApplicationWindow):
         section.set_margin_start(8)
         self.tr.bind(section, "ARAÇLAR")
         sidebar.append(section)
+        menu = box(8)
+        menu_overlay = Gtk.Overlay(child=menu)
+        self.selection_indicator = SelectionIndicator(menu, self.animations_enabled())
+        menu_overlay.add_overlay(self.selection_indicator)
+        sidebar.append(menu_overlay)
         for name, title, caption, _symbolic_icon in MODULES:
             nav_row = box(0, True)
             nav_row.add_css_class("nav-row")
@@ -108,7 +120,7 @@ class MainWindow(Adw.ApplicationWindow):
             download_button.set_child(download_image)
             download_button.connect("clicked", lambda _button, target=name: self.select_downloads(target))
             nav_row.append(download_button)
-            sidebar.append(nav_row)
+            menu.append(nav_row)
             self.nav_buttons[name] = button
             self.download_buttons[name] = download_button
             self.nav_rows[name] = nav_row
@@ -144,11 +156,10 @@ class MainWindow(Adw.ApplicationWindow):
         body.append(sidebar)
         body.append(Gtk.Separator(orientation=Gtk.Orientation.VERTICAL))
         self.stack = Gtk.Stack(hexpand=True, vexpand=True)
-        self.stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
-        self.stack.set_transition_duration(240 if self.animations_enabled() else 0)
         self.stack.set_hhomogeneous(False)
         self.stack.set_vhomogeneous(False)
-        body.append(self.stack)
+        self.page_transition = PageTransition(self.stack, self.animations_enabled())
+        body.append(self.page_transition)
         root.append(body)
         self.toast_overlay = Adw.ToastOverlay()
         self.toast_overlay.set_child(root)
@@ -172,8 +183,10 @@ class MainWindow(Adw.ApplicationWindow):
             self._gtk_settings.connect("notify::gtk-enable-animations", self.sync_motion)
             if self._gtk_settings else None
         )
+        self.updater = UpdateController(self)
         self.sync_motion()
         self.select_page(initial, initial_view)
+        self.updater.schedule_startup()
         self.connect("close-request", self.on_close)
         for index, (name, *_rest) in enumerate(MODULES, 1):
             application.set_accels_for_action("win." + name, [f"<Control>{index}"])
@@ -181,6 +194,10 @@ class MainWindow(Adw.ApplicationWindow):
         download_action.connect("activate", lambda *_: self.select_downloads(self.current_page))
         self.add_action(download_action)
         application.set_accels_for_action("win.downloads", ["<Control>l"])
+        update_action = Gio.SimpleAction.new("updates", None)
+        update_action.connect("activate", lambda *_: self.updater.show())
+        self.add_action(update_action)
+        application.set_accels_for_action("win.updates", ["<Control>u"])
 
     def animations_enabled(self):
         settings = Gtk.Settings.get_default()
@@ -205,16 +222,15 @@ class MainWindow(Adw.ApplicationWindow):
         if view == "downloads":
             self.download_buttons[name].add_css_class("selected")
         if previous_name == name:
-            transition = (Gtk.StackTransitionType.SLIDE_LEFT if view == "downloads"
-                          else Gtk.StackTransitionType.SLIDE_RIGHT)
+            direction = (1, 0) if view == "downloads" else (-1, 0)
         elif previous_name:
             names = [module[0] for module in MODULES]
-            transition = (Gtk.StackTransitionType.SLIDE_UP if names.index(name) > names.index(previous_name)
-                          else Gtk.StackTransitionType.SLIDE_DOWN)
+            direction = (0, 1) if names.index(name) > names.index(previous_name) else (0, -1)
         else:
-            transition = Gtk.StackTransitionType.CROSSFADE
-        self.stack.set_transition_type(transition)
-        self.stack.set_visible_child_name(name + ("-downloads" if view == "downloads" else ""))
+            direction = (0, 1)
+        self.selection_indicator.select(self.nav_rows[name], animate=previous_name is not None)
+        with self.motion.navigation():
+            self.page_transition.navigate(name + ("-downloads" if view == "downloads" else ""), direction)
         target = self.downloads if view == "downloads" else self.pages
         target[name].set_active(True)
         self.retranslate()
@@ -234,7 +250,7 @@ class MainWindow(Adw.ApplicationWindow):
         content = box(16)
         for method in (content.set_margin_start, content.set_margin_end, content.set_margin_bottom):
             method(24)
-        for keys, source in (("Ctrl + 1", "Sorun Teşhisi"), ("Ctrl + L", "Bu bölümün indirme sayfası")):
+        for keys, source in (("Ctrl + 1", "Sorun Teşhisi"), ("Ctrl + L", "Bu bölümün indirme sayfası"), ("Ctrl + U", "Güncellemeler")):
             row = box(24, True)
             title = label(self.tr(source))
             title.set_hexpand(True)
@@ -262,7 +278,10 @@ class MainWindow(Adw.ApplicationWindow):
         else:
             self.remove_css_class("reduce-motion")
         self.motion.set_enabled(enabled)
-        self.stack.set_transition_duration(240 if enabled else 0)
+        self.page_transition.set_enabled(enabled)
+        self.selection_indicator.set_enabled(enabled)
+        if hasattr(self, "updater") and self.updater.dialog is not None:
+            self.updater.dialog.render()
         for page in (*self.pages.values(), *self.downloads.values()):
             if hasattr(page, "sync_motion"):
                 page.sync_motion()
@@ -288,6 +307,9 @@ class MainWindow(Adw.ApplicationWindow):
     def on_close(self, *_):
         if not self._closed:
             self._closed = True
+            self.updater.close()
+            self.page_transition.close()
+            self.selection_indicator.close()
             self.motion.close()
             if self._animation_signal is not None:
                 self._gtk_settings.disconnect(self._animation_signal)

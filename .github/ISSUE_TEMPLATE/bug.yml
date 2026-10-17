@@ -1,0 +1,43 @@
+name: Hata bildir / Bug report
+description: Tekrarlanabilir uygulama, animasyon, kurulum veya güncelleme sorunu.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: "Kişisel günlükleri, kullanıcı adlarını, seri numaralarını veya erişim anahtarlarını paylaşma. / Remove personal information before posting."
+  - type: input
+    id: version
+    attributes:
+      label: Uygulama sürümü / App version
+      placeholder: "Örn. sürüm etiketindeki sayı"
+    validations:
+      required: true
+  - type: input
+    id: system
+    attributes:
+      label: Dağıtım ve masaüstü / Distribution and desktop
+      placeholder: "Örn. Ubuntu 24.04, GNOME, Wayland"
+    validations:
+      required: true
+  - type: dropdown
+    id: install
+    attributes:
+      label: Kurulum yöntemi / Installation method
+      options:
+        - DEB
+        - RPM
+        - Arch pacman
+        - Kaynak / Source checkout
+        - Diğer / Other
+  - type: textarea
+    id: steps
+    attributes:
+      label: Tekrar adımları / Steps to reproduce
+      description: "Ne yaptın, ne olmasını bekledin, ne oldu? / What did you do, expect and observe?"
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Ek bilgi / Additional context
+      description: "Animasyon için pencere boyutu ve hareket azaltma ayarı; güncelleme için görünen hata. İstersen kişisel verileri gizlenmiş kayıt ekle."

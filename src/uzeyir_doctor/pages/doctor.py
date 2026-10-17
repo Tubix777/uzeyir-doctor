@@ -35,6 +35,8 @@ class DoctorPage(Gtk.Box):
         self._cards = []
         self._fade_started = {}
         self._revealed = set()
+        self._expanders = {}
+        self._scan_failed = False
         scroll = self.scroll = Gtk.ScrolledWindow(hexpand=True, vexpand=True, hscrollbar_policy=Gtk.PolicyType.NEVER)
         content = self.content = box(22)
         scroll.get_vadjustment().connect("value-changed", self.viewport_changed)
@@ -96,7 +98,7 @@ class DoctorPage(Gtk.Box):
         app_controls = box(10, True)
         self.app_model = Gtk.StringList.new(["Uygulamalar yükleniyor…"])
         self.dropdown = Gtk.DropDown(model=self.app_model, hexpand=True)
-        self.dropdown.set_tooltip_text("Kontrol edilecek Flatpak uygulaması")
+        self.tr.bind(self.dropdown, "Kontrol edilecek Flatpak uygulaması", "set_tooltip_text")
         app_controls.append(self.dropdown)
         self.folder_button = Gtk.Button(label="Klasör seç")
         self.tr.bind(self.folder_button, "Klasör seç")
@@ -181,6 +183,9 @@ class DoctorPage(Gtk.Box):
 
     def busy(self, value):
         self._busy = value
+        if value:
+            self.scan_button.remove_css_class("operation-finished")
+        self.scan_button.set_label(self.tr("Kontrol ediliyor…" if value else "Sistemi tara"))
         self.scan_button.set_sensitive(not value)
         self.app_button.set_sensitive(not value and bool(self.apps))
         self.dropdown.set_sensitive(not value and bool(self.apps))
@@ -215,12 +220,19 @@ class DoctorPage(Gtk.Box):
 
     def show_findings(self, findings, *, auto_scroll=True):
         completed = self._busy and findings is not None
+        rebuilding = findings is not None and findings is self._findings
+        expanded = {key for key, widget in self._expanders.items() if widget.get_expanded()}
+        self._expanders = {}
+        if not rebuilding:
+            self._scan_failed = findings is None
         self.cancel_motion()
         if hasattr(self.host, "motion"):
             self.host.motion.forget(self.results)
         self.busy(False)
         if completed:
             self.scan_signal.finish()
+            if self._active:
+                self.scan_button.add_css_class("operation-finished")
         while self.results.get_first_child():
             self.results.remove(self.results.get_first_child())
         if findings is None:
@@ -228,10 +240,11 @@ class DoctorPage(Gtk.Box):
         alerts = sum(item.status in ("warning", "critical") for item in findings)
         unknown = sum(item.status == "unknown" for item in findings)
         self._findings = list(findings)
-        for key, value in (("checks", len(findings)), ("alerts", alerts), ("unknown", unknown)):
+        for key, value in (("checks", 0 if self._scan_failed else len(findings)), ("alerts", alerts), ("unknown", unknown)):
             self.scan_counts[key].set_label(str(value))
         self.filter_button.set_sensitive(True)
-        self._summary_source = f"{len(findings)} kontrol tamamlandı · {alerts} dikkat gerektiren bulgu · {unknown} kontrol edilemeyen alan"
+        self._summary_source = ("Tarama tamamlanamadı. Tekrar deneyebilirsin." if self._scan_failed else
+                                f"{len(findings)} kontrol tamamlandı · {alerts} dikkat gerektiren bulgu · {unknown} kontrol edilemeyen alan")
         self.summary.set_label(self.tr.dynamic(self._summary_source))
         order = {"critical": 0, "warning": 1, "unknown": 2, "ok": 3, "info": 4}
         def finding_order(item):
@@ -282,8 +295,9 @@ class DoctorPage(Gtk.Box):
                 details.append(label("Ne yapabilirsin?", "card-title"))
                 for index, step in enumerate(item.steps, 1):
                     details.append(label(f"{index}. {step}"))
-            expander = Gtk.Expander(label=self.tr("Kanıt ve çözüm adımları"))
+            expander = Gtk.Expander(label=self.tr("Kanıt ve çözüm adımları"), expanded=id(item) in expanded)
             expander.set_child(details)
+            self._expanders[id(item)] = expander
             card.append(expander)
             self.results.append(card)
             self._cards.append(card)
@@ -408,6 +422,7 @@ class DoctorPage(Gtk.Box):
         self._active = active
         self.sync_motion()
         if not active:
+            self.scan_button.remove_css_class("operation-finished")
             if self._motion_tick_id is not None:
                 self.remove_tick_callback(self._motion_tick_id)
                 self._motion_tick_id = None
@@ -419,6 +434,7 @@ class DoctorPage(Gtk.Box):
 
     def retranslate(self):
         self.set_apps(self.apps)
+        self.scan_button.set_label(self.tr("Kontrol ediliyor…" if self._busy else "Sistemi tara"))
         self.folder_button.set_label(self.tr("Klasörü değiştir" if self.folder else "Klasör seç"))
         if self.folder:
             from pathlib import Path

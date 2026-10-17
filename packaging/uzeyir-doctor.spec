@@ -1,5 +1,5 @@
 Name:           uzeyir-doctor
-Version:        0.1.0
+Version:        0.2.0
 Release:        1%{?dist}
 Summary:        Native Linux system diagnostics with clear next steps
 License:        GPL-3.0-or-later AND OFL-1.1
@@ -53,6 +53,11 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/io.github.Tubix777.Uz
 %{_datadir}/icons/hicolor/scalable/apps/io.github.Tubix777.UzeyirDoctor.svg
 
 %changelog
+* Sat Oct 17 2026 Uzeyir Doctor contributors - 0.2.0-1
+- Add interruptible frame-clock navigation and a sliding selection indicator
+- Preserve diagnostic details and keyboard focus, improve operation feedback
+- Verify reduced motion, rapid navigation, resizing and native distro packages
+
 * Fri Oct 16 2026 Uzeyir Doctor contributors - 0.1.0-1
 - Publish Uzeyir Doctor as a standalone diagnostic application
 - Add native Fedora, Debian-family and Arch packages

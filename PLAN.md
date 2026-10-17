@@ -19,3 +19,24 @@
 ## Later releases
 
 For each change, update the version, advance `source-date-epoch`, write release notes, build packages from one canonical source archive, verify the platform jobs, and attach the same source and packages to the GitHub release. Preserve the user's settings and existing Uzeyir Control installation.
+
+## 0.2.0 — smooth navigation and reliable feedback
+
+- [x] Inspect the existing page transitions and diagnostic feedback.
+- [x] Add short interruptible transitions and a shared navigation indicator.
+- [x] Preserve expanded evidence; show accurate failure and copy feedback.
+- [x] Verify fast navigation, focus, resize, language, reduced motion and close behavior.
+- [ ] Validate both installed views and packages in all five distro containers.
+- [ ] Publish and verify the source, distro assets and checksums on GitHub.
+
+## In-app updates — added before publication
+
+- [x] Check newer releases only in this app's official repository; select the OS package.
+- [x] Add release notes, optional startup checks and a new-release notification.
+- [x] Download asynchronously with actual byte progress, cancellation and retry.
+- [x] Verify size, GitHub asset SHA-256 and SHA256SUMS before installation.
+- [x] Use the existing PackageKit service with explicit user action and system authorization;
+  fall back clearly to the distro's native package installer when unavailable.
+- [x] Verify the installed version before restart; preserve the working app on failure.
+- [x] Test tampered packages, offline state, stale results, cancellation and close.
+- [ ] Revalidate packages and publish detailed updated documentation and releases.

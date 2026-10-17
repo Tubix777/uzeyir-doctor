@@ -37,7 +37,7 @@ def main():
     files = release_files(args.assets, version)
     view = subprocess.run(command("view", args.tag, "--json", "assets,isDraft"), capture_output=True, text=True)
     if view.returncode:
-        subprocess.run(command("create", args.tag, "--verify-tag", "--draft", "--prerelease", "--title", f"Uzeyir Doctor {args.tag}", "--notes-file", str(root / "docs/release-notes.md")), check=True)
+        subprocess.run(command("create", args.tag, "--verify-tag", "--draft", "--title", f"Uzeyir Doctor {args.tag}", "--notes-file", str(root / "docs/release-notes.md")), check=True)
         existing = set()
         is_draft = True
     else:

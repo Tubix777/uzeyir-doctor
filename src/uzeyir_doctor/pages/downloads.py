@@ -32,6 +32,8 @@ class DownloadsPage(Gtk.Box):
         self._status = "Paket bilgileri bu sürümle birlikte gelir. Güncel sürümü istediğinde kontrol edebilirsin."
         self.asset_buttons = []
         self.commands = []
+        self._copy_feedback = {}
+        self._action_widgets = {}
         self.add_css_class("downloads-page")
 
         self.scroll = Gtk.ScrolledWindow(hexpand=True, vexpand=True, hscrollbar_policy=Gtk.PolicyType.NEVER)
@@ -142,6 +144,11 @@ class DownloadsPage(Gtk.Box):
             self.render_assets()
 
     def render_assets(self):
+        focus = self.host.get_focus() if hasattr(self.host, "get_focus") else None
+        focus_key = next((key for key, widget in self._action_widgets.items()
+                          if focus is widget or (focus is not None and focus.is_ancestor(widget))), None)
+        self.clear_feedback()
+        self._action_widgets = {}
         for container in (self.asset_box, self.command_box):
             if hasattr(self.host, "motion"):
                 self.host.motion.forget(container)
@@ -173,6 +180,7 @@ class DownloadsPage(Gtk.Box):
             button.set_valign(Gtk.Align.CENTER)
             row.append(button)
             self.asset_buttons.append(button)
+            self._action_widgets[(asset.name, "download")] = button
             self.asset_box.append(row)
             if asset.install_command:
                 command = MotionBox(spacing=12)
@@ -181,17 +189,41 @@ class DownloadsPage(Gtk.Box):
                 code.set_wrap_mode(Pango.WrapMode.CHAR)
                 code.add_css_class("code-command")
                 command.append(code)
-                command.append(self.button("Kopyala", lambda _button, value=asset.install_command: self.copy(value), "soft", bind=False))
+                copy_button = self.button("Kopyala", lambda button, value=asset.install_command: self.copy(value, button), "soft", bind=False)
+                copy_button.add_css_class("copy-action")
+                self._action_widgets[(asset.name, "copy")] = copy_button
+                command.append(copy_button)
                 self.commands.append(asset.install_command)
                 self.command_box.append(command)
         self.install.set_visible(bool(self.commands))
         if hasattr(self.host, "motion"):
             self.host.motion.decorate(self.content)
+        if focus_key in self._action_widgets:
+            self._action_widgets[focus_key].grab_focus()
 
-    def copy(self, value):
+    def copy(self, value, button=None):
         if not self._closed:
             self.get_display().get_clipboard().set(value)
             self.host.toast("Komut kopyalandı")
+            if button is not None:
+                previous = self._copy_feedback.pop(button, None)
+                if previous is not None:
+                    GLib.source_remove(previous)
+                button.set_label(self.tr("Kopyalandı"))
+                button.add_css_class("copy-confirmed")
+                def restore():
+                    self._copy_feedback.pop(button, None)
+                    button.set_label(self.tr("Kopyala"))
+                    button.remove_css_class("copy-confirmed")
+                    return GLib.SOURCE_REMOVE
+                self._copy_feedback[button] = GLib.timeout_add(1400, restore)
+
+    def clear_feedback(self):
+        for button, source in self._copy_feedback.items():
+            GLib.source_remove(source)
+            button.set_label(self.tr("Kopyala"))
+            button.remove_css_class("copy-confirmed")
+        self._copy_feedback.clear()
 
     def open_link(self, url):
         if self._closed:
@@ -240,6 +272,8 @@ class DownloadsPage(Gtk.Box):
 
     def set_active(self, active):
         self._active = bool(active) and not self._closed
+        if not self._active:
+            self.clear_feedback()
         self.sync_motion()
 
     def sync_motion(self):
@@ -251,4 +285,5 @@ class DownloadsPage(Gtk.Box):
         self._active = False
         self._generation += 1
         self.spinner.stop()
+        self.clear_feedback()
         self.tr.disconnect(self.retranslate)

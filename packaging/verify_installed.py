@@ -12,6 +12,7 @@ from gi.repository import Adw, Gdk, Gio, GLib, Gtk
 from uzeyir_doctor import APP_NAME, __version__
 from uzeyir_doctor.app import CSS, MainWindow
 from uzeyir_doctor.downloads import system_format
+from uzeyir_doctor.updates import installed_version
 from uzeyir_doctor.settings import Settings
 
 assert Gtk.get_major_version() == 4 and Gtk.get_minor_version() >= 12
@@ -53,6 +54,19 @@ with tempfile.TemporaryDirectory() as directory:
                 assert page.get_mapped() and page.get_width() > 0, (module, view)
                 if hasattr(page, 'scroll'):
                     assert page.scroll.get_width() >= min(page.get_width(), 1120) * 0.8, (module, view, 'content too narrow')
+        window.update_button.emit("clicked")
+        deadline = time.monotonic() + 0.8
+        while time.monotonic() < deadline:
+            for _ in range(100):
+                if not context.pending():
+                    break
+                context.iteration(False)
+            time.sleep(0.005)
+        assert window.updater.dialog.get_mapped()
+        assert window.updater.state == "idle"
+        assert installed_version(system_format()) == __version__
+        assert window.updater.dialog.primary.get_sensitive()
+        window.updater.dialog.close()
         assert window.get_title() == APP_NAME == "Uzeyir Doctor"
         assert window.downloads['doctor']._format == system_format()
         print("Installed Uzeyir Doctor: two native views mapped; GTK", Gtk.get_minor_version(), "Adw", Adw.get_minor_version())

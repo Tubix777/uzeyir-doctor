@@ -7,3 +7,5 @@
 - For every published version, update `pyproject.toml`, its `source-date-epoch`, release notes and RPM changelog, then publish the verified source archive, DEB, RPM, source RPM and Arch package/build recipe together on GitHub Releases.
 - Keep package recipes usable from the canonical release source archive; don't depend on unpinned downloads.
 - Do not commit generated packages, local scan output, personal settings, caches or build directories.
+
+- User-requested app updates may use the existing PackageKit service or native package installer with normal system authorization. Verify package size, GitHub asset digest and SHA256SUMS before installation; never add a privileged helper or change global package signature policy. Diagnostics remain read-only.

@@ -1,0 +1,21 @@
+name: İyileştirme öner / Feature request
+description: Kullanım deneyimi, erişilebilirlik, çeviri veya özellik önerisi.
+title: "[Idea]: "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Hangi ihtiyacı karşılasın? / What problem should it solve?
+      description: "Somut bir kullanım örneği ver. / Describe a concrete use case."
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Beklenen davranış / Proposed behavior
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Alternatifler veya örnekler / Alternatives or examples

@@ -10,7 +10,7 @@ Uzeyir Doctor, Linux'taki yaygın sorunları kontrol eden ve bulgularını anla�
 Türkçe veya İngilizce açıklayan yerel bir GTK 4 / libadwaita uygulamasıdır.
 Bir kontrolün kanıtını, ne anlama geldiğini ve sonraki adımı aynı yerde gösterir.
 
-[İndir](https://github.com/Tubix777/uzeyir-doctor/releases/tag/v0.2.0) ·
+[İndir](https://github.com/Tubix777/uzeyir-doctor/releases/tag/v0.3.0) ·
 [Kurulum](docs/install.md) · [Sürüm notları](docs/release-notes.md) ·
 [Sorun bildir](https://github.com/Tubix777/uzeyir-doctor/issues)
 
@@ -34,7 +34,14 @@ Erişilemeyen veri açıkça belirtilir. SSD yüzdesi üreticinin dayanıklılı
 genel bir sağlık garantisi değildir. Ağ bağlantısı internet erişimini tek başına
 kanıtlamaz. Uygulama onarım uygulamaz veya sistem ayarlarını değiştirmez.
 
-## 0.2.0 deneyimi
+## 0.3.0 deneyimi
+
+Graphite görünümü daha okunaklı bir yazı düzeni ve sakin mat yüzeyler sunar.
+Inter pakete dahildir; açılışta font indirilmez. Sayfalar 300 ms içinde kısa bir
+hareketle geçiş yapar; hızlı seçimler görünen kareden devam eder. Büyütülmüş
+metinler, ortak düğme ölçüleri ve dar pencerede iki satıra geçen Flatpak
+kontrolleri bütün ekranlarda aynı düzeni korur.
+
 
 - Sayfa ve indirme ekranı arasında kısa, yumuşak geçişler; hızlı tıklamada görünen
   kareden devam eden hareket ve son seçime anında yanıt.
@@ -42,21 +49,21 @@ kanıtlamaz. Uygulama onarım uygulamaz veya sistem ayarlarını değiştirmez.
   yumuşak kaydırma ve kademeli beliren kartlar. Elle kaydırmak otomatik hareketi durdurur.
 - Açık kanıtlar dil/filtre değişince kapanmaz; başarısız tarama başarılı kontrol sayılmaz.
 - Komut kopyalamada düğme üzerinde onay; liste yenilenince korunan klavye odağı.
-- Siyah/gri/beyaz arayüz, uygulamaya dahil Manrope yazı tipi ve canlı Türkçe/English seçimi.
+- Siyah/gri/beyaz arayüz, uygulamaya dahil Inter yazı tipi ve canlı Türkçe/English seçimi.
 - Hareket azaltma ve masaüstünün animasyon tercihi; gizli veya kapanmış sayfalarda duran hareket.
 
 ![Uzeyir Doctor geçişleri](docs/images/navigation.gif)
 
 ## İndir ve kur
 
-| Sistem | v0.2.0 paketi |
+| Sistem | v0.3.0 paketi |
 | --- | --- |
-| Ubuntu 24.04 / 26.04, Deepin 25, Zorin 18, Debian 13 | [DEB](https://github.com/Tubix777/uzeyir-doctor/releases/download/v0.2.0/uzeyir-doctor_0.2.0-1_all.deb) |
-| Fedora 44 | [RPM](https://github.com/Tubix777/uzeyir-doctor/releases/download/v0.2.0/uzeyir-doctor-0.2.0-1.fc44.noarch.rpm) |
-| Güncel Arch Linux | [pacman paketi](https://github.com/Tubix777/uzeyir-doctor/releases/download/v0.2.0/uzeyir-doctor-0.2.0-1-any.pkg.tar.zst) · [Çevrimdışı PKGBUILD/kaynak](https://github.com/Tubix777/uzeyir-doctor/releases/download/v0.2.0/uzeyir-doctor-0.2.0-arch-build.tar.gz) |
-| Diğer uyumlu Linux sistemleri | [Kaynak](https://github.com/Tubix777/uzeyir-doctor/releases/download/v0.2.0/uzeyir-doctor-0.2.0.tar.gz) |
+| Ubuntu 24.04 / 26.04, Deepin 25, Zorin 18, Debian 13 | [DEB](https://github.com/Tubix777/uzeyir-doctor/releases/download/v0.3.0/uzeyir-doctor_0.3.0-1_all.deb) |
+| Fedora 44 | [RPM](https://github.com/Tubix777/uzeyir-doctor/releases/download/v0.3.0/uzeyir-doctor-0.3.0-1.fc44.noarch.rpm) |
+| Güncel Arch Linux | [pacman paketi](https://github.com/Tubix777/uzeyir-doctor/releases/download/v0.3.0/uzeyir-doctor-0.3.0-1-any.pkg.tar.zst) · [Çevrimdışı PKGBUILD/kaynak](https://github.com/Tubix777/uzeyir-doctor/releases/download/v0.3.0/uzeyir-doctor-0.3.0-arch-build.tar.gz) |
+| Diğer uyumlu Linux sistemleri | [Kaynak](https://github.com/Tubix777/uzeyir-doctor/releases/download/v0.3.0/uzeyir-doctor-0.3.0.tar.gz) |
 
-[Tüm paketler ve SHA256SUMS](https://github.com/Tubix777/uzeyir-doctor/releases/tag/v0.2.0).
+[Tüm paketler ve SHA256SUMS](https://github.com/Tubix777/uzeyir-doctor/releases/tag/v0.3.0).
 Python ≥ 3.11, GTK ≥ 4.12 ve libadwaita ≥ 1.5 gerekir. Zorin 18 için Ubuntu 24.04
 tabanı kullanılır. Eski dağıtımlarda asgari kütüphane sürümlerini kontrol edin.
 
@@ -64,13 +71,13 @@ tabanı kullanılır. Eski dağıtımlarda asgari kütüphane sürümlerini kont
 
 ```sh
 # Ubuntu / Deepin / Zorin / Debian
-sudo apt install ./uzeyir-doctor_0.2.0-1_all.deb
+sudo apt install ./uzeyir-doctor_0.3.0-1_all.deb
 
 # Fedora
-sudo dnf install ./uzeyir-doctor-0.2.0-1.fc44.noarch.rpm
+sudo dnf install ./uzeyir-doctor-0.3.0-1.fc44.noarch.rpm
 
 # Arch
-sudo pacman -U ./uzeyir-doctor-0.2.0-1-any.pkg.tar.zst
+sudo pacman -U ./uzeyir-doctor-0.3.0-1-any.pkg.tar.zst
 ```
 
 Uygulama menüsünden **Uzeyir Doctor**'ü veya terminalden `uzeyir-doctor` komutunu açın.
@@ -142,12 +149,12 @@ paketlerde tekrar kullanılır. [Doğrulama kapsamı](docs/validation.md),
 
 Uzeyir Doctor is a standalone native Linux diagnostic app. Local background checks
 explain storage, SSD, service, network, repository and Flatpak findings with evidence
-and next steps. Version 0.2.0 adds short interruptible transitions, copy and completion
+and next steps. Version 0.3.0 introduces Graphite surfaces and readable bundled Inter, with short interruptible transitions, copy and completion
 feedback, preserved expanded findings and keyboard focus. Turkish/English, bundled
-Manrope typography and reduced-motion preferences are supported. Diagnostic checks are read-only and never invent missing health data. The updater uses verified packages and normal system authorization only when requested. Download the matching DEB, RPM or Arch package
+Inter typography and reduced-motion preferences are supported. Diagnostic checks are read-only and never invent missing health data. The updater uses verified packages and normal system authorization only when requested. Download the matching DEB, RPM or Arch package
 from Releases; source archives, an offline Arch recipe and checksums are included.
 
 ## Lisans / License
 
-GPL-3.0-or-later. Manrope, SIL Open Font License ile sunulur.
+GPL-3.0-or-later. Inter, SIL Open Font License ile sunulur.
 See [COPYING](COPYING), [attribution](ATTRIBUTION.md) and `licenses/`.

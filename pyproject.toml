@@ -3,7 +3,7 @@ requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 [project]
 name = "uzeyir-doctor"
-version = "0.2.0"
+version = "0.3.0"
 description = "Native read-only Linux system diagnostics"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -18,7 +18,7 @@ uzeyir-doctor = "uzeyir_doctor.app:main"
 [tool.setuptools]
 package-dir = {"" = "src"}
 [tool.uzeyir-doctor]
-source-date-epoch = 1792274737
+source-date-epoch = 1792789585
 [tool.setuptools.packages.find]
 where = ["src"]
 [tool.setuptools.package-data]

@@ -1,0 +1,14 @@
+# Bundled Inter font
+
+Inter variable font (optical size and weight), unmodified.
+
+- Upstream: https://github.com/google/fonts/tree/0b58fb370093f9a9f4ff785d94405710b79de67c/ofl/inter
+- Font: `Inter[opsz,wght].ttf`, bundled as `Inter.ttf`
+- Commit: `0b58fb370093f9a9f4ff785d94405710b79de67c`
+- SHA-256: `29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031`
+- Retrieved: 2026-10-24
+- License: SIL Open Font License 1.1, full notice in [Inter-OFL.txt](Inter-OFL.txt)
+
+The font is registered in the application's process only. No system font files
+or desktop font preferences are changed. Release builds use the bundled file;
+no font download is needed at installation or runtime.

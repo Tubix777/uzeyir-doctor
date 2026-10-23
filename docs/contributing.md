@@ -15,7 +15,7 @@ kabul edilir. Önce [AGENTS.md](../AGENTS.md), [plan](../PLAN.md) ve
 
 ## Arayüz ve davranış
 
-- Siyah/gri/beyaz paleti, Manrope tipografisini, görünür klavye odağını koru.
+- Siyah/gri/beyaz paleti, Inter tipografisini, görünür klavye odağını koru.
 - Animasyonlar kesilince son seçim doğru görünmeli; giriş değerleri kaybolmamalı.
 - Dil değişimi açık ayrıntıları ve kaydedilmemiş kullanıcı seçimlerini korumalı.
 - Ölçüm, ağ ve dosya işlerini GTK ana döngüsünde çalıştırma.

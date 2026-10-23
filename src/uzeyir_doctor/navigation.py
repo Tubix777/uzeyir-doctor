@@ -21,8 +21,8 @@ class PageTransition(Gtk.Box):
 The child is allocated with its transform so pointer picking follows what is
 painted. Resizing, unmapping and motion reduction settle synchronously.
 """
-    DURATION_US = 360_000
-    DISTANCE = 24.0
+    DURATION_US = 300_000
+    DISTANCE = 16.0
 
     def __init__(self, stack, enabled=True):
         super().__init__(hexpand=True, vexpand=True)
@@ -183,7 +183,7 @@ class SelectionIndicator(Gtk.DrawingArea):
     def _frame(self, _widget, clock):
         if self._started is None:
             self._started = clock.get_frame_time()
-        progress = min(1.0, (clock.get_frame_time() - self._started) / 300_000)
+        progress = min(1.0, (clock.get_frame_time() - self._started) / 260_000)
         self._y = self._from + (self._target_y() - self._from) * ease_out(progress)
         self.queue_draw()
         if progress >= 1:

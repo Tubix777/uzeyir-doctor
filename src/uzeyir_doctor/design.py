@@ -30,7 +30,7 @@ def load_font():
         config.FcConfigAppFontAddFile.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
         config.FcConfigAppFontAddFile.restype = ctypes.c_int
         current = config.FcConfigGetCurrent()
-        if not current or not config.FcConfigAppFontAddFile(current, bytes(RESOURCES / "Manrope.ttf")):
+        if not current or not config.FcConfigAppFontAddFile(current, bytes(RESOURCES / "Inter.ttf")):
             return False
         PangoCairo.FontMap.get_default().changed()
         _font_loaded = True
@@ -61,7 +61,7 @@ def text(tr, source, css="", wrap=True):
 def heading(tr, eyebrow, title, description, illustration=None):
     hero = MotionBox(spacing=24)
     hero.add_css_class("module-hero")
-    copy = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10, hexpand=True)
+    copy = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8, hexpand=True)
     copy.append(text(tr, eyebrow, "eyebrow"))
     copy.append(text(tr, title, "hero"))
     copy.append(text(tr, description, "hero-description"))

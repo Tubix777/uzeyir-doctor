@@ -37,14 +37,10 @@ CSS = """
   transition: -gtk-icon-transform 160ms ease-out;
 }
 .uzeyir-doctor-window button:hover:not(:disabled) image {
-  -gtk-icon-transform: scale(1.08);
+  -gtk-icon-transform: scale(1.035);
 }
 .uzeyir-doctor-window button:active:not(:disabled) image {
-  -gtk-icon-transform: scale(0.96);
-}
-.uzeyir-doctor-window .card:hover, .uzeyir-doctor-window .summary:hover {
-  border-color: #666666;
-  box-shadow: 0 3px 10px alpha(#000000, 0.22);
+  -gtk-icon-transform: scale(0.97);
 }
 .uzeyir-doctor-window entry:focus-within,
 .uzeyir-doctor-window searchentry:focus-within,
@@ -80,11 +76,11 @@ CSS = """
 }
 @keyframes control-completion-halo {
   from { box-shadow: 0 0 0 0 alpha(#ffffff, 0.25); }
-  to { box-shadow: 0 0 0 8px alpha(#ffffff, 0); }
+  to { box-shadow: 0 0 0 6px alpha(#ffffff, 0); }
 }
 .uzeyir-doctor-window .operation-finished,
 .uzeyir-doctor-window .copy-confirmed {
-  animation: control-completion-halo 640ms ease-out;
+  animation: control-completion-halo 480ms ease-out;
 }
 .uzeyir-doctor-window.reduce-motion,
 .uzeyir-doctor-window.reduce-motion * {
@@ -187,11 +183,11 @@ class MotionController:
             return
         if not self._fades:
             self._order = 0
-        self._fades[card] = (None, min(self._order * 40000, 120000))
+        self._fades[card] = (None, min(self._order * 30000, 90000))
         self._order += 1
         card.set_opacity(0.7)
         if hasattr(card, "set_entrance_offset"):
-            card.set_entrance_offset(12)
+            card.set_entrance_offset(8)
         if self._tick_id is None:
             self._tick_id = self.window.add_tick_callback(self._frame)
 
@@ -211,11 +207,11 @@ class MotionController:
             if started is None:
                 started = now + delay
                 self._fades[card] = (started, delay)
-            progress = min(1, max(0, (now - started) / 320000))
+            progress = min(1, max(0, (now - started) / 280000))
             eased = 1 - (1 - progress) ** 3
             card.set_opacity(0.7 + 0.3 * eased)
             if hasattr(card, "set_entrance_offset"):
-                card.set_entrance_offset(12 * (1 - eased))
+                card.set_entrance_offset(8 * (1 - eased))
             if progress >= 1:
                 self._settle(card)
                 self._fades.pop(card, None)

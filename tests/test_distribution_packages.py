@@ -44,8 +44,8 @@ class PackageTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             target = Path(directory)
             stage(target)
-            self.assertTrue((target / "usr/share/uzeyir-doctor/src/uzeyir_doctor/resources/Manrope.ttf").is_file())
-            self.assertTrue((target / "usr/share/licenses/uzeyir-doctor/Manrope-OFL.txt").is_file())
+            self.assertTrue((target / "usr/share/uzeyir-doctor/src/uzeyir_doctor/resources/Inter.ttf").is_file())
+            self.assertTrue((target / "usr/share/licenses/uzeyir-doctor/Inter-OFL.txt").is_file())
             desktop = (target / "usr/share/applications/io.github.Tubix777.UzeyirDoctor.desktop").read_text()
             self.assertIn("Name=" + APP_NAME, desktop)
             self.assertIn("Exec=uzeyir-doctor", desktop)

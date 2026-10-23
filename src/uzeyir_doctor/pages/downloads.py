@@ -52,7 +52,7 @@ class DownloadsPage(Gtk.Box):
 
         art = icon("search", 42)
         art.add_css_class("download-hero-icon")
-        self.content.append(heading(self.tr, "İNDİRME MERKEZİ", APPLICATIONS[module], DESCRIPTIONS[module], art))
+        self.content.append(heading(self.tr, APPLICATIONS[module], "İndirmeler", DESCRIPTIONS[module], art))
         release_card = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=16)
         release_card.add_css_class("card")
         row = Gtk.Box(spacing=18)
@@ -68,7 +68,7 @@ class DownloadsPage(Gtk.Box):
         row.append(self.channel_label)
         release_card.append(row)
 
-        release_actions = Gtk.Box(spacing=10)
+        release_actions = self.release_actions = Gtk.Box(spacing=10)
         self.release_button = self.button("Sürüm sayfası", lambda *_: self.open_link(self.release.url), "soft")
         release_actions.append(self.release_button)
         self.refresh_button = self.button("Güncel sürümü kontrol et", self.refresh, "soft")
@@ -82,7 +82,7 @@ class DownloadsPage(Gtk.Box):
         self.content.append(release_card)
 
         choose = Gtk.Box(spacing=14)
-        choose.append(text(self.tr, "Paket seç", "section-title"))
+        choose.append(text(self.tr, "Paket seç", "section-title", wrap=False))
         self.format_model = Gtk.StringList()
         self.format_selector = Gtk.DropDown(model=self.format_model, halign=Gtk.Align.END, hexpand=True)
         self.format_selector.connect("notify::selected", self.format_changed)

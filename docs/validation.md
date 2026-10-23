@@ -1,3 +1,28 @@
+# Validation
+
+## 0.3.0 Graphite validation — 24 October 2026
+
+The 111-test native suite passes in a private Fedora 44 KWin/Wayland
+session (only the dpkg-deb tool test is skipped on this host). The production
+stylesheet parses without warnings. Native Pango reports the bundled Inter
+family; the upstream font and complete OFL notice are in the release source.
+
+All pages were rendered in Turkish and English at 960 × 620 and 1320 × 900.
+This includes module downloads, keyboard focus, the update dialog and compact
+Flatpak controls. Public images and the finite navigation recording are taken
+from real GTK widgets using explicit synthetic fixtures, with a demo wheel and
+no local logs, private profiles or device serials. The GIF is a scaled recording;
+the application itself uses GTK's frame clock and the desktop renderer.
+
+Motion tests cover pixel continuity when interrupted, live input picking,
+rapid navigation, manual scan-scroll interruption, resize/hide/close and both
+reduced-motion preferences. State and language tests retain selected values.
+
+Distribution jobs repeat the native suite, build and install the matching
+package and open every installed view plus the update dialog. Zorin uses its
+Ubuntu base; these checks do not exercise a physical wheel, fan or real system
+authorization.
+
 # 0.2.0 interaction validation
 
 Tests cover exact first-frame and interrupted-frame pixels, intermediate frames,
